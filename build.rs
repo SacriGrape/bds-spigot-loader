@@ -6,12 +6,13 @@ use regex::Regex;
 use windows::Win32::System::Diagnostics::Debug::UnDecorateSymbolName;
 
 fn main() {
+    let cache_path = "src/symbol_cache.json";
     // Checking if the file exists
-    if !std::path::Path::new("src/symbol_cache.json").exists() {
+    if !std::path::Path::new(cache_path).exists() {
         // BDS Directory
         let bds_directory =
             String::from("C:\\Users\\evan6\\Downloads\\bedrock-server-1.19.1.01 (2)");
-        let pdb_path = String::from("\\bedrock_server.pdb") + bds_directory.as_str();
+        let pdb_path = format!("{}\\{}", bds_directory, "bedrock_server.pdb");
 
         // Getting PDB file
         let file = File::open(pdb_path).expect("Failed to get PDB file");
@@ -69,7 +70,7 @@ fn main() {
         }
 
         // Writing the string to the file
-        fs::write(format!("{}\\{}", bds_directory, "symbol_cache.json"), stringify(symbol_json))
+        fs::write(cache_path, stringify(symbol_json))
             .expect("Failed to write Symbol File");
     }
 }

@@ -4,17 +4,21 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [lib]
 crate-type = ["cdylib"]
 
+[workspace]
+members = ["macros"]
+
 [dependencies]
+spigot_loader_macros = { path = "macros" }
 detour = { version = "0.8.0", default-features = false }
 cxx = "1.0.69"
 regex = "1.5.6"
 pdb = "0.8.0"
 lazy_static = "1.4.0"
 json = "0.12.4"
+jni = { version = "0.19.0", features = ["invocation"] }
 
 [build-dependencies]
 pdb = "0.8.0"
